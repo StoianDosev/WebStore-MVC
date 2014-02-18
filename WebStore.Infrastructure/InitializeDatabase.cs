@@ -78,6 +78,13 @@ namespace WebStore.Infrastructure
 
             context.SaveChanges();
 
+            context.CategoryLanguages.Add(new CategoryLanguage()
+            {
+                CategoryID=2,
+                LanguageID = 1,
+                Title = "Woman shoes",
+            });
+
             //Add sub categories
             context.CategoryLanguages.Add(new CategoryLanguage()
                 {
@@ -97,8 +104,8 @@ namespace WebStore.Infrastructure
                     CreatedOn = DateTime.Now,
                     ParentId = 2,
                 },
-                LanguageID = 2,
-                Title = "Елегантни обувки"
+                LanguageID = 1,
+                Title = "Elegant Shoes"
             });
             context.SaveChanges();
 
