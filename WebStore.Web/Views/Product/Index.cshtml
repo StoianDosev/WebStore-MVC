@@ -1,0 +1,53 @@
+﻿@model ProductIndexViewModel
+
+
+<h2>Index</h2>
+
+
+@{
+    List<SelectListItem> languages = Model.LanguageSelectItems.ToList();
+}
+
+@using (Html.BeginForm("Index", "Product", FormMethod.Get, new { id = "myForm" }))
+{
+    <input type="hidden" id="hiddenFieldLanguage" name="languageId" />
+}
+
+@Html.DropDownList("languageId", languages, new { id = "languagesSelect" })
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+<div>
+    @using (Ajax.BeginForm("ProductList", null, new AjaxOptions
+           {
+               HttpMethod = "Get",
+               InsertionMode = InsertionMode.Replace,
+               UpdateTargetId = "productList",
+
+           }, new { id = "pagerForm" }))
+    {
+        
+    }
+</div>
+
+<div id="productList">
+    @Html.Partial("_ProductList", Model.PagedProductViewModels)
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $("#languagesSelect").change(function () {
+            var drobDown = $(this);
+            $("#hiddenFieldLanguage").val(drobDown.val());
+
+            $("#myForm").submit();
+        });
+    </script>
+}

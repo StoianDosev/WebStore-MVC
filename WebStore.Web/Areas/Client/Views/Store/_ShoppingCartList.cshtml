@@ -1,0 +1,96 @@
+﻿@model List<ShoppingCart>
+
+<div id="shoppingListTable">
+    <table class="table table-condensed" >
+        <tr class="alert-info">
+            <th>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ProductCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TotalPrice)
+            </th>
+            <th></th>
+        </tr>
+       
+
+        @{
+            for (int i = 0; i < Model.Count(); i++)
+            {
+                <tr>
+                    <td>
+                        <img src="@Model[i].Image" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model[i].ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model[i].ProductCode)
+                    </td>
+                    <td>
+                        <input type="text" name="quantity" value="@Model[i].Quantity" class="quantityEditor">
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model[i].TotalPrice)
+                    </td>
+                    
+                    <td>
+                        <input type="hidden" class="hiddenProductId" value="@Model[i].ProductId" />
+                        <a id="@i" href="#" class="updateQuantity">Update</a>
+                    </td>
+                    <td>
+                        @*<a href="#"  class="removeItem">Remove</a>*@
+                        @Html.ActionLink("Remove", "RemoveItem", "Store", new { id = Model[i].ProductId }, new { @class = "removeItem" })
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+</div>
+
+
+<script>
+    //geting the updated values from the editor fields
+    var editors = $(".quantityEditor");
+
+    var submitsButtons = $(".updateQuantity");
+
+    submitsButtons.click(function () {
+        var a = $(this);
+        var input = "";
+        for (var i = 0; i < editors.length; i++) {
+            if (i == a.attr('id')) {
+                input = editors.eq(i).val();
+            }
+        }
+
+        var tdParent = a.parent();
+        var trParent = tdParent.parent();
+
+        var trChildren = trParent.children();
+
+        var hiddenProductId = "";
+
+        for (var i = 0; i < trChildren.length; i++) {
+            var hiddenEl = trChildren.eq(i).children(".hiddenProductId").first();
+            if (hiddenEl.val()) {
+                hiddenProductId = hiddenEl.val();
+            }
+        }
+
+        $("#productFieldId").val(hiddenProductId);
+        $("#quantityFieldId").val(input);
+
+        $("#cartUpdateForm").submit();
+
+    })
+</script>

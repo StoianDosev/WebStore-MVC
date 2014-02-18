@@ -1,0 +1,56 @@
+﻿@model ShoppingCartIndexViewModel
+
+<div id="wrapperContent">
+    <h2>Shopping Cart Details</h2>
+
+    @{
+        if (ViewBag.NoItemsMessage!=null)
+        {
+            <div class="alert alert-warning">@ViewBag.NoItemsMessage</div>
+        }
+    }
+
+    <div id="shoppingList">
+        @Html.Partial("_ShoppingCartList", @Model.ShoppingcartOrders)
+    </div>
+    <table class="table">
+        <tr class="alert-info">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <th>Total</th>
+            <th>@Model.TotalProductCount</th>
+            <th>@Model.TotalOrderPrice</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                @Html.ActionLink("Continue", "TopProducts", null, new { @class = "btn btn-primary" })
+            </td>
+            <td>
+                @Html.ActionLink("Buy", "CheckOut", new { returnUrl = "/Client/Store/CheckOut" }, new { @class = "btn btn-success" })
+            </td>
+        </tr>
+    </table>
+
+    <div>
+        @using (Html.BeginForm("UpdateQuantity", "Store", FormMethod.Get, new { id = "cartUpdateForm" }))
+        {
+            <input type="hidden" id="productFieldId" name="productId" />
+            <input type="hidden" id="quantityFieldId" name="newQuantity" />
+        }
+    </div>
+    @Html.ActionLink("Back to List", "TopProducts")
+</div>
+
+
+

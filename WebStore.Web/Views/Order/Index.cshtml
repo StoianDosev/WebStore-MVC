@@ -1,0 +1,34 @@
+﻿@model OrderIndexViewModel
+
+<h2>Orders</h2>
+<div>
+    @using (Html.BeginForm("ConfirmAction", "Order", FormMethod.Get, new { id = "myForm" }))
+    {
+        <input type="hidden" id="processedField" name="processed" />
+        <input type="hidden" id="canceledField" name="canceled" />
+        <input type="hidden" id="orderIdField" name="productId" />
+        <input type="hidden" id="sortedIdField" name="sortedItem" />
+    }
+</div>
+
+
+<div>
+    @using (Ajax.BeginForm("OrderList", null, new AjaxOptions
+           {
+               HttpMethod = "Get",
+               InsertionMode = InsertionMode.Replace,
+               UpdateTargetId = "orderList",
+
+           }, new { id = "searchForm" }))
+    {
+        @Html.DropDownList("sortedItem", Model.SortSelectListItems, new { id = "dropdown" })
+    }
+</div>
+
+<div id="orderList">
+    @Html.Partial("_OrderList", Model.OrderViewModels)
+</div>
+
+
+
+

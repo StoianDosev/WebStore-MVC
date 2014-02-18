@@ -1,0 +1,27 @@
+﻿@model CustomerIndexViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+<div>
+    @using (Ajax.BeginForm("CustomerList", null, new AjaxOptions
+           {
+               HttpMethod = "Get",
+               InsertionMode = InsertionMode.Replace,
+               UpdateTargetId = "customerList",
+
+           }, new { id = "customerForm" }))
+    {
+        
+    }
+</div>
+<div id="customerList">
+    @Html.Partial("_CustomersList", Model.CustomerViewModels)
+</div>

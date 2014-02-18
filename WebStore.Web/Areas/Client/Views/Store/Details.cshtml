@@ -1,0 +1,148 @@
+﻿@model WebStore.Web.ViewModels.ProductViewModel
+
+<div id="wrapperContent">
+    <h2>Details</h2>
+
+    @{
+        List<SelectListItem> languages = Model.LanguageSelectItems.ToList();
+    }
+
+    @using (Html.BeginForm("Details", "Store", FormMethod.Get, new { id = "myForm" }))
+    {
+        <input type="hidden" id="hiddenFieldLanguage" name="languageId" />
+        <input type="hidden" id="hiddenFieldProductId" name="productId" value="@Model.ProductId" />
+    }
+
+    @{
+        if (@ViewBag.Message != null)
+        {
+            <div class="alert alert-danger">
+                @ViewBag.Message
+            </div>
+
+        }
+    }
+
+    @Html.DropDownList("languageId", languages, new { id = "languagesSelect" })
+
+    <div>
+        <h4>Product</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Manufacturer)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Manufacturer)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Size)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Size)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Image)
+            </dt>
+
+            <dd>
+                <img src="@Model.Image" />
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductCode)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ProductCode)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.InStock)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.InStock)
+            </dd>
+
+            @Html.Hidden("productId", Model.ProductId, new { id = "hiddenProductId" })
+
+        </dl>
+    </div>
+
+    @using (Ajax.BeginForm("AddToShoppingCart", null, new AjaxOptions
+           {
+               HttpMethod = "Get",
+               InsertionMode = InsertionMode.Replace,
+               UpdateTargetId = "myCartSummary",
+
+           }, new { id = "ajaxForm" }))
+    {
+        <input type="text" value="1" name="quantity" id="quantity1" />
+       
+        @Html.Hidden("id", Model.ProductId, new { id = "hiddenProductId" })
+        <input type="submit" value="Add to Cart" class="btn btn-default" />
+    }
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Categories")
+            </th>
+        </tr>
+
+        @foreach (var item in Model.CategoryProductModels)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryViewModel.Title)
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <p>
+        @Html.ActionLink("Back to List", "TopProducts")
+    </p>
+   
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+
+        <script>
+            $("#languagesSelect").change(function () {
+                var drobDown = $(this);
+                $("#hiddenFieldLanguage").val(drobDown.val());
+                $("#myForm").submit();
+               
+            });
+
+        </script>
+    }
+</div>
+

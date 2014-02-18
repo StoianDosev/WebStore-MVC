@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Shoe Store", "TopProducts", "Store", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+
+                        @{
+                            var name = "";
+                            var user = (CustomerViewModel)Session["Customer"];
+                            if(user ==null)
+                            {
+                                name = "Guest";
+                            }
+                            else
+                            {
+                                name = user.Username;
+                            }
+                            
+                        }
+                        @Html.ActionLink("Hello " + name + "!", "ShoppingCartDetails", "Store")
+                    </li>
+                    <li>
+                        @{
+                                var user1 = (CustomerViewModel)Session["Customer"];
+                            if(user == null)
+                            {
+                                @Html.ActionLink("Login", "Login", "CustomerStore")
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Log out", "Logout", "CustomerStore")
+                            }
+                        }
+                            
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class ="col-md-3">
+        <div class="well">
+            @Html.Partial("_TreeNavigation")
+        </div>
+       
+    </div>
+
+    <div id="myCartSummary" class="col-md-9">
+        <div >
+            @{
+                Html.RenderAction("CartSummary", "Store");
+            }
+        </div>
+       
+        
+    </div>
+   
+    <div class="col-md-6">
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>
+    </div>
+
+
+    
+    <script src="~/Scripts/webStore.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

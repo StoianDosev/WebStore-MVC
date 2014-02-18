@@ -1,0 +1,50 @@
+﻿@model IPagedList<ProductViewModel>
+
+<div id="productListResult">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().InStock)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InStock)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { ProductId = item.ProductId, page = item.CurrentPage }) |
+                    @Html.ActionLink("Details", "Details", new { ProductId = item.ProductId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pagedList" data-target="#productListResult">
+        <div id="productPager">
+            @Html.PagedListPager(Model, page => Url.Action("ProductList", new { page }), PagedListRenderOptions.MinimalWithPageCountText)
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+﻿@model WebStore.Web.ViewModels.CategoryIndexViewModel
+
+@{
+    List<SelectListItem> languages = Model.LanguageSelectItems.ToList();
+}
+
+@using (Html.BeginForm("Index", "Category", FormMethod.Get, new { id = "myForm" }))
+{
+    @Html.DropDownList("languageId", languages, new { id = "languagesSelect" })
+}
+
+<br />
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryViewModels.FirstOrDefault().Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryViewModels.FirstOrDefault().CreatedOn)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.CategoryViewModels)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedOn)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { categoryId = item.CategoryId, languageId=item.LanguageId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CategoryId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script>
+    $("#languagesSelect").change(function () {
+        $("#myForm").submit();
+    });
+</script>

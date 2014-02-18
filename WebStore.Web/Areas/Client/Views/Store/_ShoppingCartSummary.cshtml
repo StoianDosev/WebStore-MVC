@@ -1,0 +1,24 @@
+﻿@model ShoppingCartIndexViewModel
+
+<div id="" class="">
+    <div class="col-md-5">
+        <table class="table table-bordered">
+            <tr>
+                <td>@Html.ActionLink("Cart Details", "ShoppingCartDetails", "Store")</td>
+                <td>Products: @Model.TotalProductCount</td>
+                <td>Total Price:@Model.TotalOrderPrice </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-6">
+        @{
+            if (ViewBag.NoItemsMessage != null)
+            {
+                <div class="alert alert-warning">@ViewBag.NoItemsMessage</div>
+            }
+        }
+
+    </div>
+
+
+</div>

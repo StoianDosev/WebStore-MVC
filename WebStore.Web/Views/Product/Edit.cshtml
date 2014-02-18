@@ -1,0 +1,159 @@
+﻿@model ProductViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@{
+    List<SelectListItem> languages = Model.LanguageSelectItems.ToList();
+}
+
+@using (Html.BeginForm("Edit", "Product", FormMethod.Get, new { id = "myForm" }))
+{
+    <input type="hidden" id="hiddenFieldLanguage" name="languageId" />
+    <input type="hidden" id="hiddenFieldProductId" name="productId" value="@Model.ProductId" />
+    
+    var page = Model.CurrentPage;
+
+    @Html.Hidden("page", page, new { id = "page" })
+}
+
+@{
+    if (@ViewBag.Message != null && @ViewBag.Message!=string.Empty)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.Message
+        </div>
+
+    }
+}
+
+@Html.ActionLink("Create New", "Create")
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Product</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ProductLanguageId)
+        @Html.Hidden("CurrentPage", Model.CurrentPage, new { id = "page" })
+        @Html.DropDownList("languageId", languages, new { id = "languagesSelect" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Manufacturer, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Manufacturer)
+                @Html.ValidationMessageFor(model => model.Manufacturer)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price)
+                @Html.ValidationMessageFor(model => model.Price)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Size, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Size)
+                @Html.ValidationMessageFor(model => model.Size)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Image, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Image)
+                @Html.ValidationMessageFor(model => model.Image)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProductCode)
+                @Html.ValidationMessageFor(model => model.ProductCode)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Quantity, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Quantity)
+                @Html.ValidationMessageFor(model => model.Quantity)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.InStock, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.InStock)
+                @Html.ValidationMessageFor(model => model.InStock)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsTopProduct, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsTopProduct)
+                @Html.ValidationMessageFor(model => model.IsTopProduct)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    <div >
+        @Html.CheckBoxListFor(model => model.CheckListCategory,
+                    modelItem => Model.CategoryViewModels,
+                    entity => entity.CategoryId,
+                    entity => entity.Title,
+                    entity => entity.isChecked, Position.Vertical)
+    </div>
+  
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $("#languagesSelect").change(function () {
+            var drobDown = $(this);
+            $("#hiddenFieldLanguage").val(drobDown.val());
+            $("#myForm").submit();
+        });
+    </script>
+}

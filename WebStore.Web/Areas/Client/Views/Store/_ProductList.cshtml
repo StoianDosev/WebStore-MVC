@@ -1,0 +1,51 @@
+﻿@model IPagedList<ProductViewModel>
+
+
+
+<div id="productList" data-productList="1">
+    <table class="table">
+        <tr class="alert-info">
+            <th>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@item.Image" />
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.ProductId, languageId = item.LanguageId })
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pagedList" data-target="#wrapperContent">
+        <div id="clientPager">
+            @Html.PagedListPager(Model, page => Url.Action("ProductList", new { page }), PagedListRenderOptions.Classic)
+        </div>
+    </div>
+    <div>
+        @Html.ActionLink("See Top Products", "TopProducts", null, new { @class = "btn btn-danger" })
+    </div>
+</div>
+
+
+
+

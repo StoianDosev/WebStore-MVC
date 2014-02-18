@@ -1,0 +1,170 @@
+﻿@model IPagedList<OrderViewModel>
+
+
+<div id="orderListResult">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TotalPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().IsProcessed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().IsCanceled)
+            </th>
+            <th></th>
+        </tr>
+        @{
+            var orders = Model;
+            for (int i = 0; i < orders.Count; i++)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => orders[i].FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => orders[i].LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => orders[i].City)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => orders[i].OrderDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => orders[i].TotalPrice)
+                    </td>
+                    <td>
+                        <input type="checkbox" class="isProcessedCheckbox" data-on-label="Send" data-off-label="Pending">
+                        @Html.Hidden("isProcessed", orders[i].IsProcessed, new { @class = "isProcessedHidden" })
+                    </td>
+                    <td>
+                        <input type="checkbox" class="isCanceledCheckbox" data-on-label="Canceled" data-off-label="Active">
+                        @Html.Hidden("isCanceled", orders[i].IsCanceled, new { @class = "isCanceledHidden" })
+                    </td>
+
+                    <td>
+                        @Html.Hidden("productId", orders[i].Id, new { @class = "productIdHidden" })
+                        <a href="#" class="confirmLink">Confirm</a>
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details","Details", new { id=orders[i].Id  })
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <div class="pagedList"  data-target="#orderListResult">
+        <div id="orderPager">
+            @Html.PagedListPager(Model, page => Url.Action("OrderList", new { page }), PagedListRenderOptions.MinimalWithPageCountText)
+        </div>
+    </div>
+</div>
+
+
+<script>
+    
+    //setting values to checkbox from db
+    var productIdHidden = $(".productIdHidden")
+
+    var checkBoxProcessed = $(".isProcessedCheckbox")
+    checkBoxProcessed.bootstrapSwitch();
+    var hiddenProcessed = $(".isProcessedHidden")
+
+    for (var i = 0; i < checkBoxProcessed.length; i++) {
+
+        var hiddenField = hiddenProcessed.eq(i).val();
+
+        if (hiddenField == "False") {
+            hiddenField = false;
+        }
+        checkBoxProcessed.eq(i).bootstrapSwitch("setState", hiddenField);
+    }
+
+    var checkBoxCanceled = $(".isCanceledCheckbox")
+    checkBoxCanceled.bootstrapSwitch();
+    var hiddenCancled = $(".isCanceledHidden")
+
+    for (var i = 0; i < checkBoxCanceled.length; i++) {
+
+        var hiddenField = hiddenCancled.eq(i).val();
+
+        if (hiddenField == "False") {
+            hiddenField = false;
+        }
+        checkBoxCanceled.eq(i).bootstrapSwitch("setState", hiddenField);
+    }
+
+
+
+    //sending data from hidden fields to server
+    $(".confirmLink").click(function () {
+        var link = $(this);
+        var tdParent = link.parent();
+        var trParent = tdParent.parent();
+
+        var trChildren = trParent.children();
+        var hiddenProcessed = "";
+
+        for (var i = 0; i < trChildren.length; i++) {
+            var checkbox = trChildren.eq(i).children(".isProcessedHidden").first();
+            if (checkbox.val()) {
+                hiddenProcessed = checkbox.val();
+            }
+        }
+
+        var hiddenCanceled = "";
+        for (var i = 0; i < trChildren.length; i++) {
+            var checkbox = trChildren.eq(i).children(".isCanceledHidden").first();
+            if (checkbox.val()) {
+                hiddenCanceled = checkbox.val();
+            }
+        }
+
+        var productId = "";
+        for (var i = 0; i < trChildren.length; i++) {
+            var checkbox = trChildren.eq(i).children(".productIdHidden").first();
+            if (checkbox.val()) {
+                productId = checkbox.val();
+            }
+        }
+
+        //loading hidden fields of the form
+        $("#processedField").val(hiddenProcessed);
+        $("#canceledField").val(hiddenCanceled);
+        $("#orderIdField").val(productId);
+
+        var sortedItem = $("#dropdown").val();
+        $("#sortedIdField").val(sortedItem)
+
+        $("#myForm").submit();
+
+    });
+
+    //on change override hidden field data for processing
+    checkBoxProcessed.on('switch-change', function (e, data) {
+        var dataValue = data.value;
+        hiddenProcessed.val(dataValue);
+    })
+
+    //on change override hidden field data for canceling
+    checkBoxCanceled.on('switch-change', function (e, data) {
+        var dataValue = data.value;
+        hiddenCancled.val(dataValue);
+    })
+</script>

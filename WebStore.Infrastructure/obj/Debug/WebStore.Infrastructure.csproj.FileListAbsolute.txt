@@ -1,0 +1,16 @@
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\bin\Debug\WebStore.Infrastructure.dll.config
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\bin\Debug\WebStore.Infrastructure.dll
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\bin\Debug\WebStore.Infrastructure.pdb
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\bin\Debug\EntityFramework.dll
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\bin\Debug\EntityFramework.xml
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\obj\Debug\WebStore.Infrastructure.csprojResolveAssemblyReference.cache
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\obj\Debug\WebStore.Infrastructure.dll
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\obj\Debug\WebStore.Infrastructure.pdb
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\bin\Debug\WebStore.Core.dll
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\bin\Debug\WebStore.Core.pdb
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Stoyan\Desktop\WebStore\WebStore.Infrastructure\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
