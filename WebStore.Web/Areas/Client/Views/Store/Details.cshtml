@@ -9,7 +9,8 @@
 
     @using (Html.BeginForm("Details", "Store", FormMethod.Get, new { id = "myForm" }))
     {
-        <input type="hidden" id="hiddenFieldLanguage" name="languageId" />
+        @Html.DropDownList("languageId", languages, new { id = "languagesSelect" })
+        
         <input type="hidden" id="hiddenFieldProductId" name="productId" value="@Model.ProductId" />
     }
 
@@ -23,7 +24,7 @@
         }
     }
 
-    @Html.DropDownList("languageId", languages, new { id = "languagesSelect" })
+    
 
     <div>
         <h4>Product</h4>
@@ -129,20 +130,5 @@
     <p>
         @Html.ActionLink("Back to List", "TopProducts")
     </p>
-   
-
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-
-        <script>
-            $("#languagesSelect").change(function () {
-                var drobDown = $(this);
-                $("#hiddenFieldLanguage").val(drobDown.val());
-                $("#myForm").submit();
-               
-            });
-
-        </script>
-    }
 </div>
 
