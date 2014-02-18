@@ -19,7 +19,7 @@ namespace WebStore.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //Database.SetInitializer<DataContext>(new InitializeDatabase());
+            Database.SetInitializer<DataContext>(new InitializeDatabase());
         }
     }
 }
