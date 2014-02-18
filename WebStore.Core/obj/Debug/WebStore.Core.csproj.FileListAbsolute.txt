@@ -23,6 +23,5 @@ C:\Users\Stoyan\Documents\GitHub\WebStore-MVC\WebStore.Core\bin\Debug\EntityFram
 C:\Users\Stoyan\Documents\GitHub\WebStore-MVC\WebStore.Core\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Stoyan\Documents\GitHub\WebStore-MVC\WebStore.Core\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 C:\Users\Stoyan\Documents\GitHub\WebStore-MVC\WebStore.Core\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Users\Stoyan\Documents\GitHub\WebStore-MVC\WebStore.Core\obj\Debug\WebStore.Core.csprojResolveAssemblyReference.cache
 C:\Users\Stoyan\Documents\GitHub\WebStore-MVC\WebStore.Core\obj\Debug\WebStore.Core.dll
 C:\Users\Stoyan\Documents\GitHub\WebStore-MVC\WebStore.Core\obj\Debug\WebStore.Core.pdb
