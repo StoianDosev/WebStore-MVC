@@ -2,6 +2,8 @@
 
 <h2>CheckOut</h2>
 
+<input type="hidden" id="hiddenActionUrl" value="@Url.Action()" />
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()

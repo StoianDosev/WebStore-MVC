@@ -4,6 +4,9 @@
 <div id="wrapperContent">
     <h2>Register</h2>
 
+    <input type="hidden" id="hiddenActionUrl" value="@Url.Action()" />
+
+
     @ViewBag.Message
     @using (Html.BeginForm("Register", "CustomerStore", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {

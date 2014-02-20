@@ -111,14 +111,5 @@ namespace WebStore.Web.Areas.Client.Controllers
                 return RedirectToAction("TopProducts", "Store");
             }
         }
-
-        public ActionResult Index()
-        {
-
-            indexModel.Load();
-            var cust = indexModel.FindCustomerByNameAndPass("petar1", "123456");
-
-            return View();
-        }
     }
 }

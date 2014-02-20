@@ -1,12 +1,9 @@
 ﻿@model ProductIndexViewModel
 
 <div id="">
-    <h2>Products</h2>
+    <h2>@Resources.Resources.Products</h2>
 
-
-    @{
-        List<SelectListItem> languages = Model.LanguageSelectItems.ToList();
-    }
+    <input type="hidden" id="hiddenActionUrl" value="/Client/Store/Index" />
 
     @using (Ajax.BeginForm("ProductList", null, new AjaxOptions
            {
@@ -19,17 +16,10 @@
         <input type="hidden" id="categoryHiddenId" name="id" value="@Model.CurrentCategoryId" />
         <input type="hidden" id="pageHidden" name="page" value="@Model.CurrentPage" />
     }
-    <div>
-        @using (Html.BeginForm("Index", "Store", FormMethod.Get, new { id = "myForm" }))
-        {
-            @Html.DropDownList("languageId", languages, new { id = "languagesSelect" })
-            <input type="hidden" id="categoryHiddenId" name="id" value="@Model.CurrentCategoryId" />
-            <input type="hidden" id="pageHidden" name="page" value="@Model.CurrentPage" />
-        }
-    </div>
 
     <div id="pagedListResult">
         @Html.Partial("_ProductList", Model.PagedProductViewModels)
     </div>
 </div>
+
 

@@ -2,19 +2,10 @@
 
 <div id="wrapperContent">
 
-    @{
-        List<SelectListItem> languages = Model.LanguageSelectItems.ToList();
-    }
+    
+    <input type="hidden" id="hiddenActionUrl" value="@Url.Action()" />
 
-    @using (Html.BeginForm("TopProducts", "Store", FormMethod.Get, new { id = "topProductForm" }))
-    {
-        <div class="">
-            @Html.DropDownList("languageId", languages, new { id = "languagesSelect" })
-        </div>
-
-    }
-
-    <h2>Top Products</h2>
+    <h2>@Resources.Resources.TopProducts</h2>
 
 
     <table class="table">
@@ -23,10 +14,10 @@
 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TopProductViewModels.FirstOrDefault().Name)
+                @Resources.Resources.Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TopProductViewModels.FirstOrDefault().Price)
+                @Resources.Resources.Price
             </th>
             <th></th>
         </tr>
@@ -45,7 +36,7 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.ProductId, languageId = item.LanguageId })
+                    @Html.ActionLink(@Resources.Resources.Details, "Details", new { id = item.ProductId, languageId = item.LanguageId })
                 </td>
             </tr>
         }

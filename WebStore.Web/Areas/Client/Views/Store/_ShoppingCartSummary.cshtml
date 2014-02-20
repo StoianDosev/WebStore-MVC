@@ -4,9 +4,9 @@
     <div class="col-md-5">
         <table class="table table-bordered">
             <tr>
-                <td>@Html.ActionLink("Cart Details", "ShoppingCartDetails", "Store")</td>
-                <td>Products: @Model.TotalProductCount</td>
-                <td>Total Price:@Model.TotalOrderPrice </td>
+                <td>@Html.ActionLink(@Resources.Resources.CartDetails, "ShoppingCartDetails", "Store")</td>
+                <td>@Resources.Resources.Products: @Model.TotalProductCount</td>
+                <td>@Resources.Resources.TotalPrice: @Model.TotalOrderPrice </td>
             </tr>
         </table>
     </div>
@@ -14,7 +14,7 @@
         @{
             if (ViewBag.NoItemsMessage != null)
             {
-                <div class="alert alert-warning">@ViewBag.NoItemsMessage</div>
+                <div class="alert alert-warning">@Resources.Resources.NoItemsMessage</div>
             }
         }
 

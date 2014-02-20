@@ -1,7 +1,10 @@
 ﻿@model ShoppingCartIndexViewModel
 
 <div id="wrapperContent">
-    <h2>Shopping Cart Details</h2>
+    <h2>@Resources.Resources.ShoppingCartDetails</h2>
+
+
+    <input type="hidden" id="hiddenActionUrl" value="@Url.Action()" />
 
     @{
         if (ViewBag.NoItemsMessage!=null)
@@ -18,7 +21,7 @@
             <td></td>
             <td></td>
             <td></td>
-            <th>Total</th>
+            <th>@Resources.Resources.TotalPrice</th>
             <th>@Model.TotalProductCount</th>
             <th>@Model.TotalOrderPrice</th>
         </tr>
@@ -28,10 +31,10 @@
             <td></td>
             <td></td>
             <td>
-                @Html.ActionLink("Continue", "TopProducts", null, new { @class = "btn btn-primary" })
+                @Html.ActionLink(@Resources.Resources.Continue, "TopProducts", null, new { @class = "btn btn-primary" })
             </td>
             <td>
-                @Html.ActionLink("Buy", "CheckOut", new { returnUrl = "/Client/Store/CheckOut" }, new { @class = "btn btn-success" })
+                @Html.ActionLink(@Resources.Resources.Buy, "CheckOut", new { returnUrl = "/Client/Store/CheckOut" }, new { @class = "btn btn-success" })
             </td>
         </tr>
     </table>
@@ -43,7 +46,6 @@
             <input type="hidden" id="quantityFieldId" name="newQuantity" />
         }
     </div>
-    @Html.ActionLink("Back to List", "TopProducts")
 </div>
 
 

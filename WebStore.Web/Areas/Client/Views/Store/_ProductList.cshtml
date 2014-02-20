@@ -9,10 +9,10 @@
 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+                @Resources.Resources.Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
+                @Resources.Resources.Price
             </th>
             <th></th>
         </tr>
@@ -31,7 +31,7 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.ProductId, languageId = item.LanguageId })
+                    @Html.ActionLink(@Resources.Resources.Details, "Details", new { id = item.ProductId, languageId = item.LanguageId })
                 </td>
             </tr>
         }
@@ -42,7 +42,7 @@
         </div>
     </div>
     <div>
-        @Html.ActionLink("See Top Products", "TopProducts", null, new { @class = "btn btn-danger" })
+        @Html.ActionLink(@Resources.Resources.TopProducts, "TopProducts", null, new { @class = "btn btn-danger" })
     </div>
 </div>
 

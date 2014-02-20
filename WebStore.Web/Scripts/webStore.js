@@ -92,15 +92,39 @@
 
 })();
 
+(function getClientPaging() {
+    var getClientProductPage = function () {
+        var a = $(this)
 
+        var options = {
+            url: a.attr("href"),
+            type: "get",
+            contentType: "application/json"
+        };
+
+        //fixing PagedList bug
+        if (a.attr("href") == "" || a.attr("href") == undefined || a.attr("href") == null) {
+            return false;
+        }
+
+        $.ajax(options).done(function (data) {
+
+            var target = $("#productList")
+            $(target).replaceWith(data);
+        })
+        return false;
+    }
+    $(".body-content").on("click", ".pagedList #clientPager a", getClientProductPage);
+
+})();
 
 //tree
 (function treeCategories() {
     var myTree = $('#treeNav');
 
-    var selectLanguage = $("#languagesSelect").val();
+    //var selectLanguage = $("#languagesSelect").val();
 
-    var dataUrlCategoryTree = "/Client/Store/GetTreeCategoriesJson/" + selectLanguage;
+    var dataUrlCategoryTree = "/Client/Store/GetTreeCategoriesJson/";
 
     console.log(dataUrlCategoryTree)
 
@@ -137,25 +161,15 @@
 
         var data1 = {
             id: node.id,
-            languageId: languageIdSelect,
-
         };
 
-        //var options = {
-        //    url: "/Client/Store/ProductList",
-        //    data: data1,
-        //    type: "get",
-        //    contentType: "application/json"
-        //};
 
         var wrapper = $("#wrapperContent")
         var productList = $("#productList")
 
-
         var attribute = productList.attr("data-productList");
 
         if (attribute == undefined) {
-
             var options = {
                 url: "/Client/Store/Index",
                 data: data1,
@@ -166,6 +180,12 @@
             $.ajax(options).done(function (data) {
                 var target = wrapper;
                 $(target).replaceWith(data);
+
+                //changing the url string from ajax
+                var pageurl = $("#hiddenActionUrl").val();
+                if (pageurl != window.location.pathname) {
+                    window.history.pushState({ path: pageurl }, '', pageurl);
+                }
             })
         }
         else {
@@ -182,54 +202,18 @@
                 $(target).replaceWith(data);
             })
         }
-
-
-        
-
-    });
-
-    function createTree() {
-
-    }
-    createTree();
-    $(document).ready(function () {
-
-    })
+    });    
 })();
 
 
 
-
-(function getClientPaging() {
-    var getClientProductPage = function () {
-        var a = $(this)
-
-        var options = {
-            url: a.attr("href"),
-            type: "get",
-            contentType: "application/json"
-        };
-
-        //fixing PagedList bug
-        if (a.attr("href") == "" || a.attr("href") == undefined || a.attr("href") == null) {
-            return false;
-        }
-
-        $.ajax(options).done(function (data) {
-
-            var target = $("#productList")
-            $(target).replaceWith(data);
-        })
-        return false;
-    }
-    $(".body-content").on("click", ".pagedList #clientPager a", getClientProductPage);
-
-})();
-
-//submiting form witout ajax
+//submiting form without ajax
 (function changeLanguage() {
-    $(".body-content").on("change", "select#languagesSelect", function () {
-        $("#myForm").submit();
+    $("#languagesSelect").change(function () {
+
+        $("#hiddenUrl").val(window.location.pathname.toString())
+
+        $("#languageForm").submit();
     });
 })();
 

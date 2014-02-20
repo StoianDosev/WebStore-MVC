@@ -1,18 +1,10 @@
 ﻿@model WebStore.Web.ViewModels.ProductViewModel
 
 <div id="wrapperContent">
-    <h2>Details</h2>
+    <h2>@Resources.Resources.Details</h2>
 
-    @{
-        List<SelectListItem> languages = Model.LanguageSelectItems.ToList();
-    }
 
-    @using (Html.BeginForm("Details", "Store", FormMethod.Get, new { id = "myForm" }))
-    {
-        @Html.DropDownList("languageId", languages, new { id = "languagesSelect" })
-        
-        <input type="hidden" id="hiddenFieldProductId" name="productId" value="@Model.ProductId" />
-    }
+    <input type="hidden" id="hiddenActionUrl" value="@Url.Action()" />
 
     @{
         if (@ViewBag.Message != null)
@@ -24,23 +16,22 @@
         }
     }
     <div>
-        <h4>Product</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Name)
+                @Resources.Resources.Name
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.Name)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Manufacturer)
+                @Resources.Resources.Manufacturer
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.Manufacturer)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Price)
+                @Resources.Resources.Price
             </dt>
 
             <dd>
@@ -48,7 +39,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Size)
+                @Resources.Resources.Size
             </dt>
 
             <dd>
@@ -56,7 +47,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Image)
+                @Resources.Resources.Image
             </dt>
 
             <dd>
@@ -64,7 +55,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.ProductCode)
+                @Resources.Resources.ProductCode
             </dt>
 
             <dd>
@@ -72,7 +63,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Quantity)
+                @Resources.Resources.Quantity
             </dt>
 
             <dd>
@@ -80,7 +71,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.InStock)
+                @Resources.Resources.InStock
             </dt>
 
             <dd>
@@ -101,15 +92,15 @@
            }, new { id = "ajaxForm" }))
     {
         <input type="text" value="1" name="quantity" id="quantity1" />
-       
+
         @Html.Hidden("id", Model.ProductId, new { id = "hiddenProductId" })
-        <input type="submit" value="Add to Cart" class="btn btn-default" />
+    <input type="submit" value=@Resources.Resources.AddToCart class="btn btn-default" />
     }
 
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayName("Categories")
+                @Resources.Resources.Categories
             </th>
         </tr>
 
@@ -125,7 +116,7 @@
     </table>
 
     <p>
-        @Html.ActionLink("Back to List", "TopProducts")
+        @Html.ActionLink(@Resources.Resources.TopProducts, "TopProducts")
     </p>
 </div>
 

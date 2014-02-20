@@ -9,10 +9,13 @@ using WebStore.Web.Areas.Client.Models;
 using WebStore.Web.Areas.Client.ViewModels;
 using WebStore.Web.ViewModels;
 using PagedList;
+using WebStore.Web.Helpers;
+using System.Threading;
+using WebStore.Core.Models;
 
 namespace WebStore.Web.Areas.Client.Controllers
 {
-    public class StoreController : Controller
+    public class StoreController : BaseController
     {
         private CategoryTreeListModel treeModel;
 
@@ -20,16 +23,58 @@ namespace WebStore.Web.Areas.Client.Controllers
 
         private ShoppingCartIndexViewModel ShoppingCart;
 
+        private List<Language> Languages;
+
+
+
         public StoreController(IUowData data)
         {
             this.treeModel = new CategoryTreeListModel(data);
             this.productModel = new ProductIndexViewModel(data);
             this.ShoppingCart = new ShoppingCartIndexViewModel(data);
+            this.Languages = data.Languages.All().ToList();
         }
 
-        public ActionResult Index(int? id, int languageId = 1, int page = 1)
+
+
+        public ActionResult SetCulture(string culture, string returnUrl)
         {
-            this.productModel.Load();
+            //cookie culture
+            culture = CultureHelper.GetImplementedCulture(culture);
+            // Save culture in a cookie
+            HttpCookie cookie = Request.Cookies["_culture"];
+            if (cookie != null)
+                cookie.Value = culture;   // update cookie value
+            else
+            {
+                cookie = new HttpCookie("_culture");
+                cookie.Value = culture;
+                cookie.Expires = DateTime.Now.AddYears(1);
+            }
+            Response.Cookies.Add(cookie);
+
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        private int GetCurrrentLanguageId()
+        {
+            string currentCulture = Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+
+            string languageName = currentCulture.Substring(0, 2).ToUpper();
+
+            var language = this.Languages.Where(x => x.Name.Equals(languageName, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+            return language.Id;
+        }
+
+
+        public ActionResult Index(int? id, int page = 1)
+        {
+            int languageId = GetCurrrentLanguageId();
 
             if (id == null)
             {
@@ -48,7 +93,7 @@ namespace WebStore.Web.Areas.Client.Controllers
 
             this.productModel.PagedProductViewModels = pagedProducts;
 
-            if(Request.IsAjaxRequest()==true)
+            if (Request.IsAjaxRequest() == true)
             {
                 return PartialView(this.productModel);
             }
@@ -56,8 +101,9 @@ namespace WebStore.Web.Areas.Client.Controllers
             return View(this.productModel);
         }
 
-        public ActionResult ProductList(int? id,int languageId = 1,int page=1)
+        public ActionResult ProductList(int? id, int page = 1)
         {
+            int languageId = GetCurrrentLanguageId();
 
             this.productModel.Load();
 
@@ -70,64 +116,48 @@ namespace WebStore.Web.Areas.Client.Controllers
 
             this.productModel.CurrentPage = page;
 
-            
-
             IList<ProductViewModel> products = this.productModel.GetAllProductsFromCategoty(id.Value, languageId);
-
 
             var pagedProducts = products.ToPagedList(page, 5);
 
             this.productModel.PagedProductViewModels = pagedProducts;
 
-
             return PartialView("_ProductList", this.productModel.PagedProductViewModels);
         }
 
-        public ActionResult TopProducts(int? languageId)
+        public ActionResult TopProducts()
         {
 
-            if(languageId==null)
-            {
-                languageId = 1;
-            }
+            int languageId = GetCurrrentLanguageId();
 
-            this.productModel.Load(languageId.Value);
+            this.productModel.Load(languageId);
 
             IList<ProductViewModel> topProducts = this.productModel.GetTopProducts();
             this.productModel.TopProductViewModels = topProducts;
 
             return View(this.productModel);
         }
-       
 
-        public JsonResult GetTreeCategoriesJson(int? id)
+
+        public JsonResult GetTreeCategoriesJson()
         {
-            if (id == null)
-            {
-                id = 1;
-            }
-            int languageId = id.Value;
+            int languageId = GetCurrrentLanguageId();
             this.treeModel.Load(languageId);
             return Json(this.treeModel.CategoryTreeModels, JsonRequestBehavior.AllowGet);
         }
 
 
-        public ActionResult Details(int? id, int? languageId)
+        public ActionResult Details(int? id)
         {
+
+            int languageId = GetCurrrentLanguageId();
 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (languageId == null)
-            {
-                this.productModel.Load();
-            }
-            else
-            {
-                this.productModel.Load(languageId.Value);
-            }
+            this.productModel.Load(languageId);
 
             ProductViewModel product = new ProductViewModel();
             product = this.productModel.ProductViewModels.Where(x => x.ProductId == id.Value).FirstOrDefault();
@@ -145,13 +175,16 @@ namespace WebStore.Web.Areas.Client.Controllers
 
         public ActionResult ShoppingCartDetails()
         {
+
+            int languageId = GetCurrrentLanguageId();
+
             if (Session["ShoppingCart"] == null)
             {
                 Session["ShoppingCart"] = this.ShoppingCart;
             }
 
             this.ShoppingCart = (ShoppingCartIndexViewModel)Session["ShoppingCart"];
-            
+
 
             if (this.ShoppingCart.ShoppingcartOrders.Count == 0)
             {
@@ -162,14 +195,14 @@ namespace WebStore.Web.Areas.Client.Controllers
             {
                 ViewBag.NoItemsMessage = "Zero products in the cart!";
             }
-           
+
             return View(this.ShoppingCart);
         }
 
         public ActionResult UpdateQuantity(int? newQuantity, int productId)
         {
 
-            if(newQuantity == null || newQuantity.Value==0)
+            if (newQuantity == null || newQuantity.Value == 0)
             {
                 return RedirectToAction("ShoppingCartDetails");
             }
@@ -186,7 +219,7 @@ namespace WebStore.Web.Areas.Client.Controllers
                 return View("ShoppingCartDetails", this.ShoppingCart);
             }
 
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 this.ShoppingCart.UpdateShoppingCart(newQuantity.Value, productId);
             }
@@ -194,7 +227,7 @@ namespace WebStore.Web.Areas.Client.Controllers
             return RedirectToAction("ShoppingCartDetails");
         }
 
-        public ActionResult AddToShoppingCart(int id, int? quantity )
+        public ActionResult AddToShoppingCart(int id, int? quantity)
         {
             if (Session["ShoppingCart"] == null)
             {
@@ -203,12 +236,10 @@ namespace WebStore.Web.Areas.Client.Controllers
 
             this.ShoppingCart = (ShoppingCartIndexViewModel)Session["ShoppingCart"];
 
-           
-
             this.productModel.Load();
             var product = this.productModel.ProductViewModels.Where(x => x.ProductId == id).FirstOrDefault();
-            
-            if(product.InStock==false)
+
+            if (product.InStock == false)
             {
                 ViewBag.NoItemsMessage = "The product is out of stock!";
                 this.ShoppingCart.InStockQuantity = false;
@@ -216,8 +247,7 @@ namespace WebStore.Web.Areas.Client.Controllers
                 return PartialView("_ShoppingCartSummary", this.ShoppingCart);
             }
 
-
-            if(quantity==null || quantity.Value==0)
+            if (quantity == null || quantity.Value == 0)
             {
                 ViewBag.NoItemsMessage = "You must enter number above zero!";
                 return PartialView("_ShoppingCartSummary", this.ShoppingCart);
@@ -233,7 +263,7 @@ namespace WebStore.Web.Areas.Client.Controllers
                 return PartialView("_ShoppingCartSummary", this.ShoppingCart);
             }
 
-            if(quantity!=null && quantity.Value!=0)
+            if (quantity != null && quantity.Value != 0)
             {
                 this.ShoppingCart.AddToShoppinCart(id, quantity.Value);
 
@@ -245,10 +275,10 @@ namespace WebStore.Web.Areas.Client.Controllers
 
         public ActionResult RemoveItem(int? id)
         {
-            
+
             this.ShoppingCart = (ShoppingCartIndexViewModel)Session["ShoppingCart"];
-            
-            if(this.ShoppingCart.ShoppingcartOrders.Count !=0)
+
+            if (this.ShoppingCart.ShoppingcartOrders.Count != 0)
             {
                 this.ShoppingCart.RemoveFromShoppingCart(id);
             }
@@ -260,6 +290,9 @@ namespace WebStore.Web.Areas.Client.Controllers
 
         public ActionResult CartSummary()
         {
+
+            int languageId = GetCurrrentLanguageId();
+
             if (Session["ShoppingCart"] == null)
             {
                 Session["ShoppingCart"] = this.ShoppingCart;
@@ -275,9 +308,7 @@ namespace WebStore.Web.Areas.Client.Controllers
 
             bool isAboveZeroQuantity = this.ShoppingCart.CheckAboveZeroQuantity();
 
-
-
-            if (isAboveZeroQuantity==false )
+            if (isAboveZeroQuantity == false)
             {
                 return RedirectToAction("ShoppingCartDetails");
             }
@@ -286,6 +317,8 @@ namespace WebStore.Web.Areas.Client.Controllers
             {
                 return RedirectToAction("Login", "CustomerStore", new { ReturnUrl = returnUrl });
             }
+
+            int languageId = GetCurrrentLanguageId();
 
             CustomerViewModel customer = (CustomerViewModel)Session["Customer"];
 

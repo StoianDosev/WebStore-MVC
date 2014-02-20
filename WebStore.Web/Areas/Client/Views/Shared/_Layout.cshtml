@@ -21,16 +21,14 @@
                 @Html.ActionLink("Shoe Store", "TopProducts", "Store", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-
-                </ul>
+                <ul class="nav navbar-nav"></ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
 
                         @{
                             var name = "";
                             var user = (CustomerViewModel)Session["Customer"];
-                            if(user ==null)
+                            if (user == null)
                             {
                                 name = "Guest";
                             }
@@ -38,14 +36,14 @@
                             {
                                 name = user.Username;
                             }
-                            
+
                         }
                         @Html.ActionLink("Hello " + name + "!", "ShoppingCartDetails", "Store")
                     </li>
                     <li>
                         @{
-                                var user1 = (CustomerViewModel)Session["Customer"];
-                            if(user == null)
+                            var user1 = (CustomerViewModel)Session["Customer"];
+                            if (user == null)
                             {
                                 @Html.ActionLink("Login", "Login", "CustomerStore")
                             }
@@ -54,41 +52,70 @@
                                 @Html.ActionLink("Log out", "Logout", "CustomerStore")
                             }
                         }
-                            
+
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class ="col-md-3">
-        <div class="well">
-            @Html.Partial("_TreeNavigation")
-        </div>
-       
-    </div>
+    <div>
 
-    <div id="myCartSummary" class="col-md-9">
-        <div >
-            @{
-                Html.RenderAction("CartSummary", "Store");
-            }
-        </div>
-       
-        
     </div>
-   
-    <div class="col-md-6">
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-            </footer>
-        </div>
-    </div>
-
-
     
+    <div></div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="well">
+                @Html.Partial("_TreeNavigation")
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div id="myCartSummary" class="col-md-9">
+                    <div>
+                        @{
+                            Html.RenderAction("CartSummary", "Store");
+                        }
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @{
+                        var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+                    }
+
+                    @helper selected(string c, string culture)
+                    {
+                        if (culture.Contains(c))
+                        {
+                            @:selected="true"
+                        }
+                    }
+
+                    @using (Html.BeginForm("SetCulture", "Store", FormMethod.Post, new { id = "languageForm" }))
+                    {
+                        <select id="languagesSelect" name="culture">
+                            <option @selected("en", culture) value="en">EN</option>
+                            <option @selected("bg", culture) value="bg">BG</option>
+                        </select>
+
+                        <input type="hidden" id="hiddenUrl" name="returnUrl"  />
+
+                    }
+                </div>
+            </div>
+            <div class="container body-content col-md-8">
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+    
+
+
     <script src="~/Scripts/webStore.js"></script>
     @RenderSection("scripts", required: false)
 </body>

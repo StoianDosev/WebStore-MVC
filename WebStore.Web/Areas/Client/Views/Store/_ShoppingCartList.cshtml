@@ -7,16 +7,16 @@
 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().ProductName)
+                @Resources.Resources.Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().ProductCode)
+                @Resources.Resources.ProductCode
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
+                @Resources.Resources.Quantity
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().TotalPrice)
+                @Resources.Resources.TotalPrice
             </th>
             <th></th>
         </tr>
@@ -44,16 +44,14 @@
                     
                     <td>
                         <input type="hidden" class="hiddenProductId" value="@Model[i].ProductId" />
-                        <a id="@i" href="#" class="updateQuantity">Update</a>
+                        <a id="@i" href="#" class="updateQuantity">@Resources.Resources.Update</a>
                     </td>
                     <td>
-                        @*<a href="#"  class="removeItem">Remove</a>*@
-                        @Html.ActionLink("Remove", "RemoveItem", "Store", new { id = Model[i].ProductId }, new { @class = "removeItem" })
+                        @Html.ActionLink(@Resources.Resources.Remove, "RemoveItem", "Store", new { id = Model[i].ProductId }, new { @class = "removeItem" })
                     </td>
                 </tr>
             }
         }
-
     </table>
 </div>
 
