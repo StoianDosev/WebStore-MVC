@@ -30,7 +30,7 @@
                             var user = (CustomerViewModel)Session["Customer"];
                             if (user == null)
                             {
-                                name = "Guest";
+                                name = @Resources.Resources.Guest;
                             }
                             else
                             {
@@ -38,18 +38,18 @@
                             }
 
                         }
-                        @Html.ActionLink("Hello " + name + "!", "ShoppingCartDetails", "Store")
+                        @Html.ActionLink(@Resources.Resources.Hello +" " + name + "!", "ShoppingCartDetails", "Store")
                     </li>
                     <li>
                         @{
                             var user1 = (CustomerViewModel)Session["Customer"];
                             if (user == null)
                             {
-                                @Html.ActionLink("Login", "Login", "CustomerStore")
+                                @Html.ActionLink(@Resources.Resources.Login, "Login", "CustomerStore")
                             }
                             else
                             {
-                                @Html.ActionLink("Log out", "Logout", "CustomerStore")
+                                @Html.ActionLink(@Resources.Resources.Logout, "Logout", "CustomerStore")
                             }
                         }
 

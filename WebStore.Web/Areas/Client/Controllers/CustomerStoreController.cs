@@ -10,7 +10,7 @@ using WebStore.Web.ViewModels;
 
 namespace WebStore.Web.Areas.Client.Controllers
 {
-    public class CustomerStoreController : Controller
+    public class CustomerStoreController : BaseController
     {
         private CustomerIndexViewModel indexModel;
 

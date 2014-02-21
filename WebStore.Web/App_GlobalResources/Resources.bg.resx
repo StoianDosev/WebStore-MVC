@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Address" xml:space="preserve">
+    <value>Адрес</value>
+  </data>
   <data name="AddToCart" xml:space="preserve">
     <value>Добави</value>
+  </data>
+  <data name="BackToCart" xml:space="preserve">
+    <value>Назад към картата</value>
   </data>
   <data name="Buy" xml:space="preserve">
     <value>Купи</value>
@@ -129,17 +135,50 @@
   <data name="Categories" xml:space="preserve">
     <value>Категории</value>
   </data>
+  <data name="CheckOut" xml:space="preserve">
+    <value>Завърши покупката</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Град</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Подтвърди</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Подтвърди паролата</value>
+  </data>
   <data name="Continue" xml:space="preserve">
     <value>Продължи</value>
   </data>
+  <data name="CreateNewAccount" xml:space="preserve">
+    <value>Създай нов акаунт.</value>
+  </data>
   <data name="Details" xml:space="preserve">
     <value>Детайли</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Емайл</value>
+  </data>
+  <data name="Guest" xml:space="preserve">
+    <value>Гост</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Здравей</value>
   </data>
   <data name="Image" xml:space="preserve">
     <value>Изображение</value>
   </data>
   <data name="InStock" xml:space="preserve">
     <value>В наличност</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Влез в профила</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Излез</value>
   </data>
   <data name="Manufacturer" xml:space="preserve">
     <value>Производител</value>
@@ -150,17 +189,32 @@
   <data name="NoItemsMessage" xml:space="preserve">
     <value>Продуктите трябва да бъдат над нула!</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Парола</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Телефон</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Цена</value>
   </data>
   <data name="ProductCode" xml:space="preserve">
     <value>Код на продукта</value>
   </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Продукт</value>
+  </data>
   <data name="Products" xml:space="preserve">
     <value>Продукти</value>
   </data>
+  <data name="PruductCode" xml:space="preserve">
+    <value>Продуктов код</value>
+  </data>
   <data name="Quantity" xml:space="preserve">
     <value>Количество</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Регистриране</value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Премахни</value>
@@ -180,7 +234,16 @@
   <data name="TotalPrice" xml:space="preserve">
     <value>Обща цена</value>
   </data>
+  <data name="UnitPrice" xml:space="preserve">
+    <value>Единична цена</value>
+  </data>
   <data name="Update" xml:space="preserve">
     <value>Обнови</value>
+  </data>
+  <data name="UseLocalAccount" xml:space="preserve">
+    <value>Влез със свой акаунт.</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Потребителско име</value>
   </data>
 </root>
